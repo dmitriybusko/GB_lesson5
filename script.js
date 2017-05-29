@@ -1,15 +1,16 @@
 function Clock(options){
 	var valueTimer = false;
+	var countTimer = 1000;
+	var elem = document.getElementById(options);
 
 	function time(){
-		var currentDate = new Date();
-		var hrs = check(currentDate.getHours());
-		var min = check(currentDate.getMinutes());
-		var sec = check(currentDate.getSeconds());
-		var elem = document.getElementById(options);
-		elem.innerHTML=hrs+":"+min+":"+sec;
 		if(valueTimer){
-			var t = setTimeout(time, 500);
+			var currentDate = new Date();
+			var hrs = check(currentDate.getHours());
+			var min = check(currentDate.getMinutes());
+			var sec = check(currentDate.getSeconds());
+			elem.innerHTML=hrs+":"+min+":"+sec;
+			var t = setTimeout(time, countTimer);
 		}
 	}
 
@@ -20,12 +21,19 @@ function Clock(options){
 	}
 
 	function start() {
+		elem.style.color = "black";
 		valueTimer = true;
 		time();
 	}
 
 	function stop() {
 		valueTimer = false;
+	}
+
+	elem.onclick = function(){
+		stop();
+		var timerClick = setTimeout(start, 3000);
+		elem.style.color = "red";
 	}
 
 	this.start = start;
